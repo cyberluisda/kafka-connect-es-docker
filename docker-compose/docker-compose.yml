@@ -1,0 +1,72 @@
+---
+version: '2.1'
+services:
+  ## NOTE: This service must be build before use kconnect, there are internal
+  #dependency at base docker level
+  kafka-connect-es:
+    build: ..
+
+  produce-tests:
+    build: dockers/produce-tests
+    depends_on:
+      kafka:
+        condition: service_healthy
+      kconnect:
+        condition: service_healthy
+
+  kconnect:
+    build: dockers/kconnect
+    depends_on:
+      kafka:
+        condition: service_healthy
+      elastic-search:
+        condition: service_healthy
+    healthcheck:
+      test: 'curl "http://localhost:8083/connectors" | fgrep test_es'
+
+  # ~~~~~~~~~~~~~~~~
+  # end2end services
+  # ~~~~~~~~~~~~~~~~
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+
+  kafka:
+    image: wurstmeister/kafka:0.10.1.1
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+
+    depends_on:
+      zookeeper:
+        condition: service_started
+    healthcheck:
+      test: "nc -z -w1 localhost 9092"
+
+  ############
+  # Remember # increase ulimits if you are using docker machine:
+  ############
+  # docker-machine ssh []
+  # sudo -i
+  # sysctl -w vm.max_map_count=262144
+  elastic-search:
+    image: elasticsearch:5.1.1 # Todo migrate to docker.elastic.co
+    healthcheck:
+      test: 'curl "http://localhost:9200/_cluster/health?pretty=true" | fgrep status | egrep -e "green|yellow"'
+
+  # ~~~~~~~~~~~~~~~
+  # HELPER services
+  # ~~~~~~~~~~~~~~~
+
+  kafka-ctl:
+    image: cyberluisda/kafka-ctrl
+    depends_on:
+      kafka:
+        condition: service_healthy
+  curl:
+    image: appropriate/curl
+    depends_on:
+      elastic-search:
+        condition: service_healthy
