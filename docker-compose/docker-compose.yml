@@ -32,7 +32,7 @@ services:
     image: wurstmeister/zookeeper
 
   kafka:
-    image: wurstmeister/kafka:0.10.1.1
+    image: openshine/kafka:0.10.2.0
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
@@ -43,7 +43,7 @@ services:
       zookeeper:
         condition: service_started
     healthcheck:
-      test: "nc -z -w1 localhost 9092"
+      test: "netstat -plnt | fgrep ':9092'"
 
   ############
   # Remember # increase ulimits if you are using docker machine:
