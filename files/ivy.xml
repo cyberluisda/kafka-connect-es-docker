@@ -3,5 +3,6 @@
     <configurations defaultconfmapping="default"/>
     <dependencies>
         <dependency org="io.confluent" name="kafka-connect-elasticsearch" rev="3.2.0" />
+        <dependency org="net.logstash.log4j" name="jsonevent-layout" rev="1.7" />
     </dependencies>
 </ivy-module>
