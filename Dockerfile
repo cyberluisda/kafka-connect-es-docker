@@ -1,6 +1,6 @@
 FROM cyberluisda/kafka-connect:0.11.0.0
 
-MAINTAINER Luis David Barrios Alfonso (luisdavid.barrios@agsnasoft.com / cyberluisda@gmail.com)
+MAINTAINER Luis David Barrios Alfonso (cyberluisda@gmail.com)
 
 # Install ivy
 ENV IVI_VERSION 2.4.0
