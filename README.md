@@ -49,4 +49,24 @@ docker-compose run --rm curl "elastic-search:9200/tests/test/1?pretty=true"
 
 ## Cleaning procedure ##
 
-**TODO**
+* After data was saved on ES, you can delete all services with:
+
+  ```
+  docker-compose down
+  ```
+
+* Clean building local images.
+
+  ```
+  docker images  | awk '$1~/dockercompose/{print $3}' | xargs docker rmi -f
+  ```
+
+  Please, have in mind, that last command delete all local docker images which
+  name contains `dockercompose`. This is default project name set by docker-compose
+  (it is extracted from `docker-compose` path where example is saved).
+
+* Clean local docker volumes.
+
+  ```
+  docker volume prune -f
+  ```
