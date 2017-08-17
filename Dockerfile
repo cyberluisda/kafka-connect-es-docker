@@ -19,4 +19,7 @@ RUN java \
     -settings /usr/lib/kafka/connect-es/ivy-settings.xml \
     -ivy /usr/lib/kafka/connect-es/ivy.xml \
     -retrieve "/usr/lib/kafka/connect-es/[artifact]-[revision].[ext]"
+# Remove conflicts
+RUN rm -f \
+    /usr/lib/kafka/connect-es/guava-18.0.jar
 ENV CLASSPATH $CLASSPATH:/usr/lib/kafka/connect-es/*
