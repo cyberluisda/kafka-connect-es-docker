@@ -6,7 +6,7 @@ MAINTAINER Luis David Barrios Alfonso (luisdavid.barrios@agsnasoft.com / cyberlu
 ENV IVI_VERSION 2.4.0
 
 RUN cd /usr/lib && \
-curl "http://ftp.cixug.es/apache//ant/ivy/${IVI_VERSION}/apache-ivy-${IVI_VERSION}-bin-with-deps.tar.gz" | tar -zxvf - && \
+curl "http://ftp.cixug.es/apache/ant/ivy/${IVI_VERSION}/apache-ivy-${IVI_VERSION}-bin-with-deps.tar.gz" | tar -zxvf - && \
 rm -fr /usr/lib/apache-ivy-${IVI_VERSION}/src /usr/lib/apache-ivy-${IVI_VERSION}/doc
 RUN mkdir -p /usr/share/java/ && ln -s /usr/lib/apache-ivy-${IVI_VERSION}/ivy-2.4.0.jar /usr/share/java/ivy.jar
 
