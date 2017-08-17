@@ -14,5 +14,9 @@ RUN mkdir -p /usr/share/java/ && ln -s /usr/lib/apache-ivy-${IVI_VERSION}/ivy-2.
 RUN mkdir -p /usr/lib/kafka/connect-es
 COPY files/ivy.xml /usr/lib/kafka/connect-es/
 COPY files/ivy-settings.xml /usr/lib/kafka/connect-es/
-RUN java -jar /usr/share/java/ivy.jar -settings /usr/lib/kafka/connect-es/ivy-settings.xml -ivy /usr/lib/kafka/connect-es/ivy.xml -retrieve "/usr/lib/kafka/connect-es/[artifact].[ext]"
+RUN java \
+    -jar /usr/share/java/ivy.jar \
+    -settings /usr/lib/kafka/connect-es/ivy-settings.xml \
+    -ivy /usr/lib/kafka/connect-es/ivy.xml \
+    -retrieve "/usr/lib/kafka/connect-es/[artifact]-[revision].[ext]"
 ENV CLASSPATH $CLASSPATH:/usr/lib/kafka/connect-es/*
