@@ -1,4 +1,4 @@
-FROM cyberluisda/kafka-connect:0.10.2.0
+FROM cyberluisda/kafka-connect:0.11.0.0
 
 MAINTAINER Luis David Barrios Alfonso (luisdavid.barrios@agsnasoft.com / cyberluisda@gmail.com)
 
